@@ -4,6 +4,7 @@ import './styles/menu.css';
 import Header from './Header';
 import billingImage from './assets/billing.png';
 import invImage from './assets/inventory.png';
+import reportImage from '/assets/inventory.png';
 
 const Menu = () => {
   const navigate = useNavigate();
@@ -18,6 +19,10 @@ const Menu = () => {
       <div className="menu-card" onClick={() => navigate('/billing')}>
         <h2>Billing System</h2>
         <img src={billingImage} alt="Inventory" className="menu-card-image" />
+      </div>
+      <div className="menu-card" onClick={() => navigate('/sales')}>
+        <h2>Sales Report</h2>
+        <img src={reportImage} alt="Inventory" className="menu-card-image" />
       </div>
     </div>
   );

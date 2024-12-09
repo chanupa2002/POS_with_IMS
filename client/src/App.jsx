@@ -9,6 +9,7 @@ import UpdateItem from './UpdateItem'
 import Billing from './Billing'
 import Menu from './Menu'
 import Checkout from './Checkout'
+import Sales from './Sales'
 //import "./styles/app.css"
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
             <Route path='/additem' element={<Additem></Additem>}></Route>
             <Route path='/updateItem/:id' element={<UpdateItem></UpdateItem>}></Route>
             <Route path='/checkout' element={<Checkout></Checkout>}></Route>
+            <Route path='sales' element={<Sales></Sales>}></Route>
           </Routes>
        </BrowserRouter> 
     </>

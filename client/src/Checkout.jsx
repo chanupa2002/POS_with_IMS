@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import './styles/checkout.css';
 import Header from './Header';
+import axios from 'axios';
+
 
 function Checkout() {
   const [cart, setCart] = useState([]);
@@ -10,7 +12,7 @@ function Checkout() {
   useEffect(() => {
     const storedCart = JSON.parse(localStorage.getItem('cart'));
     const storedCustomerName = localStorage.getItem('customerName');
-    const storedCashierName = localStorage.getItem('username'); 
+    const storedCashierName = localStorage.getItem('username');
 
     if (storedCart) {
       setCart(storedCart);
@@ -24,7 +26,26 @@ function Checkout() {
   }, []);
 
   const handleConfirmOrder = () => {
-    window.print();
+    const totalAmount = cart.reduce((total, item) => total + item.price * item.quantity, 0);
+
+    const saleData = {
+      customerName,
+      cashierName,
+      totalAmount,
+      itemDetails: cart,
+    };
+
+    // Send sale data to the backend to save in the sales collection
+    axios.post('http://localhost:3001/sales', saleData)
+      .then(response => {
+        console.log('Sale saved successfully:', response.data);
+        // Optionally, handle the success (e.g., show a confirmation message or navigate to another page)
+        window.print();
+      })
+      .catch(error => {
+        console.error('Error saving sale:', error);
+        // Optionally, handle the error (e.g., show an error message)
+      });
   };
 
   return (

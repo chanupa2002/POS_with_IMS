@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const EmployeeModel = require('./models/Employee');
 const ItemModel = require('./models/Item');
+const Sale = require('./models/Sales'); 
 
 const app = express();
 app.use(express.json());
@@ -164,6 +165,44 @@ app.post('/cart/cancel', (req, res) => {
 
   res.json({ message: 'Order canceled, quantities reverted' });
 });
+
+// POST route to handle sale data
+app.post('/sales', async (req, res) => {
+  try {
+    const { customerName, cashierName, totalAmount, itemDetails } = req.body;
+
+    // Assuming itemDetails contains itemId and quantity
+    const populatedItemDetails = await Promise.all(itemDetails.map(async (item) => {
+      const itemInfo = await ItemModel.findById(item.itemId);  // Fetch item info by itemId
+      return { 
+        itemName: itemInfo.name,  // Include item name in the sale data
+        quantity: item.quantity
+      };
+    }));
+
+    const newSale = new Sale({
+      customerName,
+      cashierName,
+      totalAmount,
+      itemDetails: populatedItemDetails
+    });
+
+    const savedSale = await newSale.save();
+    res.status(200).json(savedSale);
+  } catch (error) {
+    console.error('Error saving sale:', error);
+    res.status(500).json({ error: 'Failed to save sale' });
+  }
+});
+
+
+// Fetch all sales data
+app.get('/sales', (req, res) => {
+  Sale.find()
+    .then(sales => res.json(sales))
+    .catch(err => res.status(500).json({ message: "Error fetching sales", error: err }));
+});
+
 
 app.listen(3001, () => {
   console.log("Server is running on port 3001");

@@ -1,31 +1,29 @@
 const mongoose = require('mongoose');
 
-// Define the schema for an item
 const ItemSchema = new mongoose.Schema({
     name: {
         type: String,
-        required: true,  // Ensuring name is required
+        required: true,  
     },
     description: {
         type: String,
-        required: true,  // Item description
+        required: true,  
     },
     price: {
         type: Number,
-        required: true,  // Item price
+        required: true, 
     },
     quantity: {
         type: Number,
-        required: true,  // Quantity in stock
-        default: 0,  // Default quantity is 0 if not provided
+        required: true,  
+        default: 0, 
     },
     createdAt: {
         type: Date,
-        default: Date.now,  // Timestamp when the item is created
+        default: Date.now,  
     },
 });
 
-// Create and export the Item model
 const ItemModel = mongoose.model("items", ItemSchema);
 
 module.exports = ItemModel;
