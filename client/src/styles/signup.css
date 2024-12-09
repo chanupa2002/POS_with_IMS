@@ -1,0 +1,51 @@
+.container {
+    margin-top: 80px;
+  }
+  
+  .card {
+    border-radius: 10px;
+    border: 2px solid #ccc; /* Add a good border */
+    min-width: 350px; /* Minimum form width */
+    background-color: #f9f9f9; /* Light background for better contrast */
+  }
+  
+  h3 {
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .btn-primary {
+    background-color: #28a745; /* Green color for Register button */
+    border: none;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+  }
+  
+  .btn-primary:hover {
+    background-color: #218838;
+    transform: scale(1.02);
+  }
+  
+  .btn-secondary {
+    background-color: #e0e0e0; /* White-gray mix for Login button */
+    color: #333;
+    border: 1px solid #ccc;
+    width: 100%;
+    margin-top: 10px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+  }
+  
+  .btn-secondary:hover {
+    background-color: #d6d6d6;
+    transform: scale(1.02);
+  }
+  
+  .form-control {
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+  
+  .text-center p {
+    margin-bottom: 5px;
+    color: #555;
+  }
+  

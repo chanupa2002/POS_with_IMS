@@ -1,0 +1,275 @@
+/* General styling for the billing container */
+.billing-container {
+    font-family: 'Arial', sans-serif;
+    margin: 20px;
+  }
+  
+  /* Styling for customer details input */
+  .customer-details {
+    margin-bottom: 20px;
+  }
+  
+  .customer-details input {
+    padding: 10px;
+    font-size: 16px;
+    width: 100%;
+    max-width: 300px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  /* Styling for table container */
+  .table-container {
+    margin-bottom: 20px;
+  }
+  
+  /* Table title styling */
+  .table-title {
+    font-size: 28px;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  /* General table styling */
+  .item-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    border: 2px solid black;
+  }
+
+  .cart-table {
+    width: 50%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    border:4px solid black;
+  }
+  
+  /* Table header and cell styling */
+  .item-table th, .item-table td,
+  .cart-table th, .cart-table td {
+    padding: 12px;
+    border: 1px solid black;
+    text-align: left;
+  }
+  
+  /* Table header background color */
+  .item-table th, .cart-table th {
+    background-color: #3498db;
+    color: white;
+  }
+  
+  /* Styling for the "Add to Cart" button */
+  .add-to-cart-btn {
+    background-color: #2ecc71;
+    color: white;
+    border: none;
+    margin-left: 15px;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  /* Hover effect for the "Add to Cart" button */
+  .add-to-cart-btn:hover {
+    background-color: #27ae60;
+  }
+  
+  /* Styling for the cart container */
+  .cart-container {
+    margin-top: 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center the content horizontally */
+    justify-content: center; /* Center the content vertically */
+    text-align: center; /* Center the text */
+  }
+  
+  
+  /* Styling for the checkout container */
+  .checkout-container {
+    margin-top: 20px;
+    text-align: center;
+  }
+  
+  /* Styling for the checkout and cancel buttons */
+  .checkout-container button,
+  .cancel-order-btn {
+    padding: 12px 20px;
+    font-size: 18px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  /* Checkout button styling */
+  .checkout-container button {
+    background-color: #f39c12;
+    color: white;
+  }
+  
+  .checkout-container button:hover {
+    background-color: #e67e22;
+  }
+  
+  /* Cancel order button styling */
+  .cancel-order-btn {
+    background-color: #e74c3c;
+    color: white;
+    margin-left: 20px;
+  }
+  
+  .cancel-order-btn:hover {
+    background-color: #c0392b;
+  }
+  
+  .remove-from-cart-btn {
+    background-color: #e74c3c;
+    color: white;
+    padding: 8px 16px;
+    font-size: 14px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  .remove-from-cart-btn:hover {
+    background-color: #c0392b;
+  }
+
+  .remove-quantity-input {
+    width: 60px;
+    padding: 5px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-right: 50px; 
+  }
+  
+  .remove-from-cart-btn {
+    background-color: #e74c3c;
+    color: white;
+    margin-left: 12px;
+    padding: 8px 16px;
+    font-size: 14px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  .remove-from-cart-btn:hover {
+    background-color: #c0392b;
+  }
+  /* Overall Invoice Container */
+.invoice-container {
+    max-width: 800px;
+    margin: 0 auto;
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    border: 1px solid #ddd;
+    background-color: #f9f9f9;
+  }
+  
+  /* Header Styling */
+  .invoice-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 30px;
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 15px;
+  }
+  
+  .company-info {
+    font-size: 14px;
+  }
+  
+  .company-info h2 {
+    margin: 0;
+    font-size: 22px;
+  }
+  
+  .invoice-details {
+    text-align: right;
+    font-size: 14px;
+  }
+  
+  .invoice-details h3 {
+    font-size: 24px;
+    margin: 0;
+  }
+  
+  /* Customer Information Section */
+  .customer-info {
+    margin-top: 30px;
+    font-size: 16px;
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 15px;
+  }
+  
+  .customer-info h3 {
+    margin-bottom: 10px;
+    font-size: 20px;
+  }
+  
+  /* Cart Details Section */
+  .cart-details {
+    margin-top: 30px;
+  }
+  
+  .cart-details h3 {
+    margin-bottom: 10px;
+    font-size: 20px;
+  }
+  
+  .cart-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+  }
+  
+  .cart-table th, .cart-table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+  }
+  
+  .cart-table th {
+    background-color: #f1f1f1;
+  }
+  
+  /* Order Summary Section */
+  .order-summary {
+    margin-top: 30px;
+    font-size: 16px;
+    border-top: 2px solid #ddd;
+    padding-top: 15px;
+  }
+  
+  .order-summary h3 {
+    margin-bottom: 10px;
+    font-size: 20px;
+  }
+  
+  /* Checkout Buttons */
+  .checkout-buttons {
+    margin-top: 30px;
+    text-align: center;
+  }
+  
+  .checkout-buttons button {
+    padding: 10px 20px;
+    font-size: 18px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .checkout-buttons button:hover {
+    background-color: #45a049;
+  }
+  

@@ -1,0 +1,46 @@
+.checkout-container {
+    padding: 20px;
+    font-family: Arial, sans-serif;
+  }
+  
+  .invoice-header {
+    margin-bottom: 20px;
+  }
+  
+  .invoice-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .invoice-table th, .invoice-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  .invoice-footer {
+    margin-top: 20px;
+  }
+  
+  @media print {
+    .invoice-container > header {
+      display: none !important; /* Force hiding the header */
+    }
+  
+    .checkout-buttons {
+      display: none; /* Hide buttons during printing */
+    }
+  
+    /* Adjust layout if header is removed */
+    .invoice-container {
+      margin-top: 0;
+    }
+  }
+
+  @media print {
+    .header-container {
+      display: none !important;
+    }
+  }
+  
+  

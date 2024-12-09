@@ -1,0 +1,148 @@
+/* Home Page Container */
+.home-container {
+  font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f4f4f4;
+  padding-top: 80px; /* Ensure content doesn't overlap the fixed header */
+}
+
+/* Action Button Container */
+.action-container {
+  display: flex;
+  justify-content: flex-end; /* Aligns the button to the right */
+  width: 100%; /* Ensures it spans the width of the page */
+  margin-bottom: 10px; /* Adds space between the button and the table */
+  padding-right: 20px; /* Adds padding for alignment */
+}
+
+/* Add Item Button */
+.add-item-btn {
+  background-color: #3498db;
+  color: white;
+  border: none;
+  padding: 15px 30px;
+  font-size: 18px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.add-item-btn:hover {
+  background-color: #2980b9;
+}
+
+/* Table Container */
+.table-container {
+  width: 90%; /* Makes the table container narrower for better alignment */
+  margin-top: 20px; /* Reduces the space above the table */
+  text-align: center;
+  overflow-x: auto; /* Ensures horizontal scrolling for overflow */
+}
+
+/* Table Title */
+.table-title {
+  font-size: 24px; /* Slightly smaller font size */
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+/* Table Styles */
+.item-table {
+  width: 100%; /* Ensures the table fills the container */
+  border-collapse: collapse;
+  margin-bottom: 20px; /* Adds space below the table */
+  table-layout: fixed;
+}
+
+.item-table th,
+.item-table td {
+  padding: 15px; /* Adjusted padding for spacing */
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+.item-table th {
+  background-color: #3498db;
+  color: white;
+  font-weight: bold;
+}
+
+.item-table tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.item-table tr:hover {
+  background-color: #ddd;
+}
+
+/* Update Button */
+.update-btn {
+  background-color: #f39c12;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.update-btn:hover {
+  background-color: #e67e22;
+}
+
+/* Delete Button */
+.delete-btn {
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-left: 10px; /* Adds space between Update and Delete button */
+}
+
+.delete-btn:hover {
+  background-color: #c0392b;
+}
+
+/* Responsive Layout (Mobile Friendly) */
+@media (max-width: 768px) {
+  .home-container {
+      padding-top: 60px; /* Adjusted padding for smaller screens */
+  }
+
+  .table-title {
+      font-size: 20px; /* Adjusted title font size */
+  }
+
+  .item-table th,
+  .item-table td {
+      padding: 10px; /* Reduced padding for smaller screens */
+  }
+
+  .add-item-btn {
+      font-size: 16px;
+      padding: 10px 20px;
+  }
+}
+
+/* For Larger Screens */
+@media (min-width: 1024px) {
+  .table-container {
+      width: 95%; /* Centers the table container with a narrower width */
+  }
+
+  .item-table {
+      table-layout: fixed;
+  }
+}
+
+.oos{
+  color: #c0392b;
+}
