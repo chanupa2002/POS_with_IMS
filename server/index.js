@@ -4,8 +4,13 @@ const cors = require('cors');
 const EmployeeModel = require('./models/Employee');
 const ItemModel = require('./models/Item');
 const Sale = require('./models/Sales'); 
+const multer = require('multer');
+const nodemailer = require('nodemailer');
+const upload = multer();
+
 
 const app = express();
+const router = express.Router(); // Initialize router
 app.use(express.json());
 app.use(cors());
 
@@ -84,6 +89,20 @@ app.put('/items/:id', (req, res) => {
     })
     .catch(err => res.status(500).json({ message: 'Error updating item', error: err }));
 });
+
+app.put('/items/:id', (req, res) => {
+  const itemId = req.params.id;
+  const updatedQuantity = req.body.quantity;
+
+  ItemModel.findByIdAndUpdate(itemId, { stockQuantity: updatedQuantity }, { new: true })
+    .then(updatedItem => {
+      res.json(updatedItem);
+    })
+    .catch(error => {
+      res.status(500).json({ message: 'Error updating item quantity', error });
+    });
+});
+
 
 // DELETE Route (remove item)
 app.delete('/items/:id', (req, res) => {
@@ -171,20 +190,11 @@ app.post('/sales', async (req, res) => {
   try {
     const { customerName, cashierName, totalAmount, itemDetails } = req.body;
 
-    // Assuming itemDetails contains itemId and quantity
-    const populatedItemDetails = await Promise.all(itemDetails.map(async (item) => {
-      const itemInfo = await ItemModel.findById(item.itemId);  // Fetch item info by itemId
-      return { 
-        itemName: itemInfo.name,  // Include item name in the sale data
-        quantity: item.quantity
-      };
-    }));
-
     const newSale = new Sale({
       customerName,
       cashierName,
       totalAmount,
-      itemDetails: populatedItemDetails
+      itemDetails
     });
 
     const savedSale = await newSale.save();

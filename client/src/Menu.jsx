@@ -4,7 +4,7 @@ import './styles/menu.css';
 import Header from './Header';
 import billingImage from './assets/billing.png';
 import invImage from './assets/inventory.png';
-import reportImage from '/assets/inventory.png';
+import reportImage from './assets/reports.png';
 
 const Menu = () => {
   const navigate = useNavigate();

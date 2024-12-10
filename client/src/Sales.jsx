@@ -6,6 +6,7 @@ import axios from 'axios';  // To make HTTP requests
 
 function Sales() {
   const [sales, setSales] = useState([]); // State to hold fetched sales
+  const [error, setError] = useState('');  // State to hold error message
   const navigate = useNavigate();  // Initialize the navigate function
 
   // Fetch sales when the component mounts
@@ -16,6 +17,7 @@ function Sales() {
       })
       .catch((error) => {
         console.log("Error fetching sales:", error);
+        setError('Failed to load sales data. Please try again later.');  // Set error message
       });
   }, []);
 
@@ -28,6 +30,8 @@ function Sales() {
   return (
     <div className="home-container">
       <Header title="Sales History" />  {/* Title for the page */}
+
+      {error && <div className="error-message">{error}</div>}  {/* Display error message if any */}
 
       <div className="table-container">
         <h2 className="table-title">Sales List</h2>
@@ -43,23 +47,32 @@ function Sales() {
             </tr>
           </thead>
           <tbody>
-            {sales.map((sale) => (
-              <tr key={sale._id}>
-                <td>{sale.invoiceNumber}</td>
-                <td>{sale.customerName}</td>
-                <td>{sale.totalAmount}</td>
-                <td>{new Date(sale.date).toLocaleDateString()}</td>
-                <td>{sale.cashierName}</td>
-                <td>
-                  {/* Display items and their quantities */}
-                  {sale.itemDetails.map((itemDetail) => (
-                    <div key={itemDetail._id}>
-                      <span>{itemDetail.name} (Qty: {itemDetail.quantity})</span>
-                    </div>
-                  ))}
-                </td>
+            {sales.length > 0 ? (
+              sales.map((sale) => (
+                <tr key={sale._id}>
+                  <td>{sale.invoiceNumber}</td>
+                  <td>{sale.customerName}</td>
+                  <td>{sale.totalAmount}</td>
+                  <td>{new Date(sale.date).toLocaleDateString()}</td>
+                  <td>{sale.cashierName}</td>
+                  <td>
+                    {/* Display items and their quantities */}
+                    {sale.itemDetails.slice(0, 3).map((itemDetail, index) => (
+                      <div key={index}>
+                        <span>{itemDetail.name} (Qty: {itemDetail.quantity})</span>
+                      </div>
+                    ))}
+                    {sale.itemDetails.length > 3 && (
+                      <button onClick={() => handleView(sale._id)}>View All Items</button>
+                    )}
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="6">No sales available.</td>
               </tr>
-            ))}
+            )}
           </tbody>
         </table>
       </div>

@@ -2,12 +2,15 @@ import React, { useEffect, useState } from 'react';
 import './styles/checkout.css';
 import Header from './Header';
 import axios from 'axios';
-
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 
 function Checkout() {
   const [cart, setCart] = useState([]);
   const [customerName, setCustomerName] = useState('');
   const [cashierName, setCashierName] = useState('');
+  const [confirmationMessage, setConfirmationMessage] = useState(''); // Added confirmation message state
+  const [customerEmail, setCustomerEmail] = useState('');
+  const navigate = useNavigate(); // Initialize navigate
 
   useEffect(() => {
     const storedCart = JSON.parse(localStorage.getItem('cart'));
@@ -35,16 +38,47 @@ function Checkout() {
       itemDetails: cart,
     };
 
-    // Send sale data to the backend to save in the sales collection
     axios.post('http://localhost:3001/sales', saleData)
       .then(response => {
         console.log('Sale saved successfully:', response.data);
-        // Optionally, handle the success (e.g., show a confirmation message or navigate to another page)
-        window.print();
+
+        // Update inventory after order confirmation
+        const updateInventoryPromises = cart.map(item => {
+          const newQuantity = item.cartQuantity; // Calculate the new quantity
+          return axios.put(`http://localhost:3001/items/${item._id}`, {
+            quantity: newQuantity, // Update with the new quantity
+          });
+        });
+
+        // Wait for all inventory updates to complete
+        Promise.all(updateInventoryPromises)
+          .then(() => {
+            console.log("All inventory updated successfully");
+
+            // Clear cart from localStorage and state
+            localStorage.removeItem('cart');
+            setCart([]); // Clear cart state
+
+            // Display confirmation message
+            setConfirmationMessage("Order confirmed. Thank you for your purchase!");
+
+            // Trigger printing and navigation to home
+            window.print();
+
+            // Use setTimeout to navigate to home after the print dialog is closed
+            setTimeout(() => {
+              setCustomerName('');
+              localStorage.removeItem('customerName');
+              navigate('/menu'); // Navigate to the home page
+            }, 1000);
+          })
+          .catch(error => {
+            console.error("Error updating inventory:", error);
+          });
+
       })
       .catch(error => {
         console.error('Error saving sale:', error);
-        // Optionally, handle the error (e.g., show an error message)
       });
   };
 
@@ -106,6 +140,9 @@ function Checkout() {
         <p>Total amount: {cart.reduce((total, item) => total + item.price * item.quantity, 0)}</p>
       </div>
       <p>Cashier: {cashierName}</p>
+
+      {/* Show confirmation message */}
+      {confirmationMessage && <p className="confirmation-message">{confirmationMessage}</p>}
 
       <div className="checkout-buttons">
         <button onClick={handleConfirmOrder}>Confirm Order</button>

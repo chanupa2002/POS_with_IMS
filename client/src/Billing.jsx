@@ -86,45 +86,74 @@ function Billing() {
     }
   };
 
-  // Handle cart checkout (e.g., submit to the backend or navigate to a new page)
+  // In your Billing component
   const handleCheckout = () => {
-    if (cart.length === 0) {
-      alert("Your cart is empty!");
-      return;
-    }
+  if (cart.length === 0) {
+    alert("Your cart is empty!");
+    return;
+  }
 
-    // Persist cart and customer name in localStorage
-    localStorage.setItem('cart', JSON.stringify(cart));
-    localStorage.setItem('customerName', customerName);
-
-    // Proceed to checkout logic (e.g., save cart to database)
-    console.log('Proceeding to checkout with cart:', cart);
-    navigate('/checkout'); // Example navigation to a checkout page
+  const totalAmount = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
+  const cashierName = "Cashier Name"; // This can be dynamically set
+  const saleData = {
+    customerName,
+    cashierName,
+    totalAmount,
+    itemDetails: cart
   };
 
+  // Store customerName in localStorage before navigating
+  localStorage.setItem('customerName', customerName);
+
+  // Remove the axios.post part to prevent saving data to the sales table
+  // axios.post('http://localhost:3001/sales', saleData)
+  //   .then((response) => {
+  //     console.log('Sale saved successfully:', response.data);
+  //     navigate('/checkout');
+  //   })
+  //   .catch((error) => {
+  //     console.error('Error saving sale:', error);
+  //   });
+
+  // Directly navigate to the checkout page without saving to the database
+  navigate('/checkout');
+};
+
+  
   // Cancel the order and clear the cart, reverting changes in the database
   const handleCancelOrder = () => {
-    // Revert changes to the items in the cart (update the quantities in the database)
     cart.forEach(cartItem => {
-      axios.put(`http://localhost:3001/items/${cartItem._id}`, {
-        quantity: cartItem.quantity + cartItem.quantity // Add back the removed quantity
-      })
-        .catch((error) => {
-          console.log("Error updating item quantity:", error);
-        });
+      const originalItem = items.find(item => item._id === cartItem._id);
+  
+      if (originalItem) {
+        axios.put(`http://localhost:3001/items/${cartItem._id}`, {
+          quantity: originalItem.quantity + cartItem.quantity,
+        })
+          .then(() => {
+            console.log(`Restored quantity for item: ${cartItem.name}`);
+          })
+          .catch((error) => {
+            console.error("Error restoring item quantity:", error);
+          });
+      }
     });
-
-    setCart([]);  // Clear the cart
-    setCustomerName('');  // Clear the customer name
-    setIsNameLocked(false);  // Unlock the name input for a new order
-
-    // Remove cart and customer name from localStorage
+  
+    setCart([]);
+    setCustomerName('');
+    setIsNameLocked(false);
+  
     localStorage.removeItem('cart');
     localStorage.removeItem('customerName');
-
-    // Refresh the page after canceling the order
-    window.location.reload();
+  
+    axios.get('http://localhost:3001/items')
+      .then(response => {
+        setItems(response.data);
+      })
+      .catch(error => {
+        console.error("Error fetching items after canceling order:", error);
+      });
   };
+  
 
   // Handle removing a specific quantity of an item from the cart
   const handleRemoveFromCart = (itemId, quantity) => {
@@ -169,15 +198,7 @@ function Billing() {
     <div className="billing-container">
       <Header title="Billing System" />
 
-      <div className="customer-details">
-        <input
-          type="text"
-          placeholder="Enter customer name"
-          value={customerName}
-          onChange={handleNameChange}
-          disabled={isNameLocked}  // Disable the input if the name is locked
-        />
-      </div>
+      
 
       <div className="table-container">
         <h2 className="table-title">Available Items</h2>
@@ -224,7 +245,16 @@ function Billing() {
           </tbody>
         </table>
       </div>
-
+      <div className="customer-details">
+        <span>Customer Name : </span>
+        <input
+          type="text"
+          placeholder="Enter customer name"
+          value={customerName}
+          onChange={handleNameChange}
+          disabled={isNameLocked}  // Disable the input if the name is locked
+        />
+      </div>
       <div className="cart-container">
         <h2>Cart</h2>
         {cart.length > 0 ? (
